@@ -1,0 +1,22 @@
+# Ignore VS Code settings
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Upload artifacts
+uploads/
+
+# Node modules and local env
+node_modules/
+.env
