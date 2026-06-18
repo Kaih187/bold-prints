@@ -1,3 +1,8 @@
+// Backend base URL. Empty string keeps requests same-origin (when the site is
+// served by server.js). Set window.BOLD_PRINTS_API_BASE to the backend URL when
+// the static site is hosted separately (e.g. GitHub Pages -> Render backend).
+const API_BASE = (window.BOLD_PRINTS_API_BASE || '').replace(/\/+$/, '');
+
 const products = [
   {title:'Banner Printing',price:'KSh 650',size:'Any custom size',badge:'Bestseller',image:'https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=900&q=85'},
   {title:'Roll-Up Banners',price:'KSh 6,500',size:'850 × 2000 mm',badge:'Event ready',image:'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=900&q=85'},
@@ -145,7 +150,7 @@ async function submitArtworkForm(event){
     return;
   }
   try {
-    const response = await fetch('/api/send-artwork', {
+    const response = await fetch(`${API_BASE}/api/send-artwork`, {
       method: 'POST',
       body: formData
     });
