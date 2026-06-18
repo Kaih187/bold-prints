@@ -140,8 +140,9 @@ async function submitArtworkForm(event){
   const form = event.target;
   const formData = new FormData(form);
   const files = form.querySelector('input[name="artwork"]').files;
-  if (files.length) {
-    Array.from(files).forEach(file => formData.append('artwork', file));
+  if (!files.length) {
+    showToast('Artwork needed', 'Please attach at least one artwork file before submitting.');
+    return;
   }
   try {
     const response = await fetch('/api/send-artwork', {
@@ -152,10 +153,19 @@ async function submitArtworkForm(event){
     if (!response.ok || !result.success) {
       throw new Error(result.message || 'Failed to send artwork submission.');
     }
+    if (result.fallback && result.whatsappUrl) {
+      const whatsappWindow = window.open(result.whatsappUrl, '_blank', 'noopener');
+      if (!whatsappWindow) {
+        window.location.href = result.whatsappUrl;
+      }
+    }
     closeModal(uploadModal);
     form.reset();
     document.querySelector('.file-name').textContent = '';
-    showToast('Sent successfully', 'Your artwork request was sent over WhatsApp.');
+    showToast(
+      result.fallback ? 'WhatsApp opened' : 'Sent successfully',
+      result.fallback ? 'Your details include artwork download links.' : 'Your artwork request was sent over WhatsApp.'
+    );
   } catch (error) {
     console.error('Upload submit failed:', error);
     showToast('Send failed', error.message || 'Please try again later.');

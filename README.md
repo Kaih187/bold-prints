@@ -17,7 +17,8 @@ Open `http://127.0.0.1:3000` in the browser.
 1. Copy `.env.example` to `.env`.
 2. Set `WHATSAPP_API_URL` and `WHATSAPP_API_TOKEN`.
 3. Optionally set `WHATSAPP_PHONE` (defaults to `255769604606`).
-4. Restart the server and submit artwork using the upload form.
+4. Optionally set `WHATSAPP_PUBLIC_BASE_URL` to your public site URL so fallback upload links work outside your computer.
+5. Restart the server and submit artwork using the upload form.
 
 ## GitHub Pages deployment
 
