@@ -145,8 +145,8 @@ if(specSendBtn){
     const product = currentProduct || '';
     // obtain tel from contact meta and normalize to digits
     const telEl = document.querySelector('.contact-meta a[href^="tel:"]');
-    let phone = '254700265377';
-    if(telEl){ phone = telEl.getAttribute('href').replace(/[^0-9]/g,''); if(phone.startsWith('0')) phone = phone.replace(/^0/,'254'); }
+    let phone = '255769604606';
+    if(telEl){ phone = telEl.getAttribute('href').replace(/[^0-9]/g,''); if(phone.startsWith('0')) phone = phone.replace(/^0/,'255'); }
     const message = `Artwork request: ${product}\nDimensions: ${width} x ${height} mm\nBleed: ${bleed} mm\nSafe area: ${safe} mm\nResolution: ${dpi} dpi\nFormat: ${format}`;
     const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(waUrl,'_blank');
