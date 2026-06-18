@@ -6,10 +6,18 @@ Static marketing site for BOLD PRINTS.
 
 ```bash
 cd "c:\Users\BOLD\Documents\BOLDWEB\bold-prints-website\bold-prints-website"
-python -m http.server 8000
+npm install
+npm start
 ```
 
-Open `http://127.0.0.1:8000` in the browser.
+Open `http://127.0.0.1:3000` in the browser.
+
+## WhatsApp Business API
+
+1. Copy `.env.example` to `.env`.
+2. Set `WHATSAPP_API_URL` and `WHATSAPP_API_TOKEN`.
+3. Optionally set `WHATSAPP_PHONE` (defaults to `255769604606`).
+4. Restart the server and submit artwork using the upload form.
 
 ## GitHub Pages deployment
 

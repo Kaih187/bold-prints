@@ -128,8 +128,41 @@ const fileInput=document.querySelector('#file-drop input');
 fileInput.addEventListener('change',()=>{document.querySelector('.file-name').textContent=[...fileInput.files].map(f=>f.name).join(', ')});
 
 const toast=document.querySelector('.toast');
-function showToast(){toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),4500)}
-document.querySelector('#upload-form').addEventListener('submit',e=>{e.preventDefault();closeModal(uploadModal);e.target.reset();document.querySelector('.file-name').textContent='';showToast()});
+function showToast(message='Request received', subtitle='Our print team will be in touch shortly.'){
+  toast.querySelector('b').textContent = message;
+  toast.querySelector('span:last-child').textContent = subtitle;
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),4500);
+}
+
+async function submitArtworkForm(event){
+  event.preventDefault();
+  const form = event.target;
+  const formData = new FormData(form);
+  const files = form.querySelector('input[name="artwork"]').files;
+  if (files.length) {
+    Array.from(files).forEach(file => formData.append('artwork', file));
+  }
+  try {
+    const response = await fetch('/api/send-artwork', {
+      method: 'POST',
+      body: formData
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) {
+      throw new Error(result.message || 'Failed to send artwork submission.');
+    }
+    closeModal(uploadModal);
+    form.reset();
+    document.querySelector('.file-name').textContent = '';
+    showToast('Sent successfully', 'Your artwork request was sent over WhatsApp.');
+  } catch (error) {
+    console.error('Upload submit failed:', error);
+    showToast('Send failed', error.message || 'Please try again later.');
+  }
+}
+
+document.querySelector('#upload-form').addEventListener('submit', submitArtworkForm);
 document.querySelector('#contact-form').addEventListener('submit',e=>{e.preventDefault();e.target.reset();showToast()});
 
 // Send spec form details to WhatsApp using the site's contact phone number

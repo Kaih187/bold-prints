@@ -13,3 +13,10 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Upload artifacts
+uploads/
+
+# Node modules and local env
+node_modules/
+.env
