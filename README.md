@@ -15,10 +15,13 @@ Open `http://127.0.0.1:3000` in the browser.
 ## WhatsApp Business API
 
 1. Copy `.env.example` to `.env`.
-2. Set `WHATSAPP_API_URL` and `WHATSAPP_API_TOKEN`.
-3. Optionally set `WHATSAPP_PHONE` (defaults to `255769604606`).
-4. Optionally set `WHATSAPP_PUBLIC_BASE_URL` to your public site URL so fallback upload links work outside your computer.
-5. Restart the server and submit artwork using the upload form.
+2. Set `WHATSAPP_PROVIDER=meta`.
+3. Set `WHATSAPP_PHONE_NUMBER_ID` to your Meta WhatsApp phone number ID.
+4. Set `WHATSAPP_API_TOKEN` to a valid Meta access token.
+5. Optionally set `WHATSAPP_PHONE` to the number that should receive submissions.
+6. Restart the server and submit artwork using the upload form.
+
+When Meta Cloud API is configured, uploaded artwork is sent as an actual WhatsApp document message. Without WhatsApp API credentials, a normal `wa.me` chat link can only prefill text; it cannot attach files automatically.
 
 ## GitHub Pages deployment
 

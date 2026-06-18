@@ -25,6 +25,7 @@ const whatsappApiToken = process.env.WHATSAPP_API_TOKEN;
 const whatsappMediaUploadUrl = process.env.WHATSAPP_MEDIA_UPLOAD_URL;
 const whatsappMessageUrl = process.env.WHATSAPP_MESSAGE_URL;
 const whatsappProvider = (process.env.WHATSAPP_PROVIDER || '').toLowerCase(); // 'meta' or 'twilio'
+const whatsappGraphVersion = process.env.WHATSAPP_GRAPH_VERSION || 'v23.0';
 const metaPhoneId = process.env.WHATSAPP_PHONE_NUMBER_ID;
 const twilioAccountSid = process.env.TWILIO_ACCOUNT_SID;
 const twilioAuthToken = process.env.TWILIO_AUTH_TOKEN;
@@ -52,15 +53,27 @@ function safePublicFilename(originalName) {
 
 function keepFallbackUploads(files, baseUrl) {
   return files.map(file => {
-    const storedName = `${Date.now()}-${crypto.randomBytes(4).toString('hex')}-${safePublicFilename(file.originalname)}`;
-    const storedPath = path.join(uploadDir, storedName);
-    fs.renameSync(file.path, storedPath);
-
-    return {
-      name: file.originalname,
-      url: `${baseUrl}/uploads/${encodeURIComponent(storedName)}`
-    };
+    return publishUpload(file, baseUrl);
   });
+}
+
+function publishUpload(file, baseUrl) {
+  if (file.publicUrl) {
+    return { name: file.originalname, url: file.publicUrl };
+  }
+
+  const storedName = `${Date.now()}-${crypto.randomBytes(4).toString('hex')}-${safePublicFilename(file.originalname)}`;
+  const storedPath = path.join(uploadDir, storedName);
+  fs.renameSync(file.path, storedPath);
+  file.path = storedPath;
+  file.filename = storedName;
+  file.keepAfterSend = true;
+  file.publicUrl = `${baseUrl}/uploads/${encodeURIComponent(storedName)}`;
+
+  return {
+    name: file.originalname,
+    url: file.publicUrl
+  };
 }
 
 const hasMetaConfig = whatsappProvider === 'meta' && isConfiguredValue(whatsappApiToken) && isConfiguredValue(metaPhoneId);
@@ -98,7 +111,7 @@ app.post('/api/send-artwork', upload.array('artwork'), async (req, res) => {
         fallback: true,
         whatsappUrl,
         files: uploadedFiles,
-        message: 'WhatsApp chat fallback ready with artwork links.'
+        message: 'WhatsApp API is not configured, so the fallback message uses artwork links. Configure Meta or Twilio to send files as WhatsApp documents.'
       });
     }
 
@@ -116,18 +129,6 @@ app.post('/api/send-artwork', upload.array('artwork'), async (req, res) => {
         continue;
       }
 
-      const formData = new FormData();
-      // Include client details in the caption so the recipient sees context
-      formData.append('messaging_product', 'whatsapp');
-      formData.append('to', targetPhone);
-      formData.append('type', 'document');
-      formData.append('recipient_type', 'individual');
-      formData.append('document', fs.createReadStream(file.path), {
-        filename: file.originalname,
-        contentType: file.mimetype
-      });
-      formData.append('caption', `${messageText}\nFile: ${file.originalname}`);
-
       try {
         // Provider-specific two-step flows
         if (whatsappProvider === 'meta') {
@@ -137,14 +138,15 @@ app.post('/api/send-artwork', upload.array('artwork'), async (req, res) => {
           }
 
           // Media upload to Meta Graph API
-          const mediaUrl = `https://graph.facebook.com/v17.0/${metaPhoneId}/media`;
+          const mediaUrl = `https://graph.facebook.com/${whatsappGraphVersion}/${metaPhoneId}/media`;
           const mediaForm = new FormData();
+          mediaForm.append('messaging_product', 'whatsapp');
           mediaForm.append('file', fs.createReadStream(file.path), { filename: file.originalname, contentType: file.mimetype });
-          mediaForm.append('access_token', whatsappApiToken);
 
           const mediaResp = await axios.post(mediaUrl, mediaForm, {
             headers: {
-              ...mediaForm.getHeaders()
+              ...mediaForm.getHeaders(),
+              Authorization: `Bearer ${whatsappApiToken}`
             },
             maxContentLength: Infinity,
             maxBodyLength: Infinity,
@@ -161,17 +163,24 @@ app.post('/api/send-artwork', upload.array('artwork'), async (req, res) => {
           }
 
           // Send message referencing media id
-          const messageUrl = `https://graph.facebook.com/v17.0/${metaPhoneId}/messages`;
+          const messageUrl = `https://graph.facebook.com/${whatsappGraphVersion}/${metaPhoneId}/messages`;
           const messagePayload = {
             messaging_product: 'whatsapp',
+            recipient_type: 'individual',
             to: targetPhone,
             type: 'document',
-            document: { id: mediaId, caption: `${messageText}\nFile: ${file.originalname}` },
-            access_token: whatsappApiToken
+            document: {
+              id: mediaId,
+              filename: file.originalname,
+              caption: `${messageText}\nFile: ${file.originalname}`
+            }
           };
 
           const msgResp = await axios.post(messageUrl, messagePayload, {
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${whatsappApiToken}`
+            },
             validateStatus: status => true
           });
 
@@ -191,15 +200,15 @@ app.post('/api/send-artwork', upload.array('artwork'), async (req, res) => {
             continue;
           }
 
-          // Construct a public URL where Twilio can fetch the uploaded file. Ensure your server is reachable at publicBaseUrl.
-          const publicUrl = `${publicBaseUrl.replace(/\/\/$/, '')}/uploads/${encodeURIComponent(path.basename(file.path))}`;
+          // Twilio fetches this URL and delivers it to WhatsApp as a media attachment.
+          const publicFile = publishUpload(file, normalizeBaseUrl(publicBaseUrl));
 
           const twilioUrl = `https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSid}/Messages.json`;
           const params = new URLSearchParams();
           params.append('From', twilioFrom);
           params.append('To', `whatsapp:+${targetPhone}`);
           params.append('Body', `${messageText}\nFile: ${file.originalname}`);
-          params.append('MediaUrl', publicUrl);
+          params.append('MediaUrl', publicFile.url);
 
           const twResp = await axios.post(twilioUrl, params.toString(), {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -216,7 +225,7 @@ app.post('/api/send-artwork', upload.array('artwork'), async (req, res) => {
             responses.push({ file: file.originalname, success: false, status: twResp.status, error: twResp.data || twResp.statusText });
           }
 
-        } else if (whatsappMediaUploadUrl && whatsappMessageUrl) {
+        } else if (hasGenericTwoStepConfig) {
           // Generic two-step: upload to provided endpoints then send
           const mediaForm = new FormData();
           mediaForm.append('file', fs.createReadStream(file.path), { filename: file.originalname, contentType: file.mimetype });
@@ -251,6 +260,18 @@ app.post('/api/send-artwork', upload.array('artwork'), async (req, res) => {
 
         } else {
           // Single-step: send document directly
+          const formData = new FormData();
+          // Include client details in the caption so the recipient sees context
+          formData.append('messaging_product', 'whatsapp');
+          formData.append('to', targetPhone);
+          formData.append('type', 'document');
+          formData.append('recipient_type', 'individual');
+          formData.append('document', fs.createReadStream(file.path), {
+            filename: file.originalname,
+            contentType: file.mimetype
+          });
+          formData.append('caption', `${messageText}\nFile: ${file.originalname}`);
+
           const response = await axios.post(whatsappApiUrl, formData, {
             headers: {
               ...formData.getHeaders(),
@@ -281,7 +302,11 @@ app.post('/api/send-artwork', upload.array('artwork'), async (req, res) => {
     }
 
     // Clean up uploaded files
-    req.files.forEach(file => fs.unlink(file.path, () => {}));
+    req.files.forEach(file => {
+      if (!file.keepAfterSend) {
+        fs.unlink(file.path, () => {});
+      }
+    });
 
     const failed = responses.filter(r => !r.success);
     if (failed.length) {
@@ -292,7 +317,13 @@ app.post('/api/send-artwork', upload.array('artwork'), async (req, res) => {
     return res.json({ success: true, message: 'Artwork details sent via WhatsApp.', data: responses });
   } catch (error) {
     console.error('WhatsApp send failed:', error.response?.data || error.message || error);
-    if (req.file?.path) { fs.unlink(req.file.path, () => {}); }
+    if (req.files?.length) {
+      req.files.forEach(file => {
+        if (!file.keepAfterSend && file.path) {
+          fs.unlink(file.path, () => {});
+        }
+      });
+    }
     return res.status(500).json({ success: false, message: 'Failed to send artwork submission via WhatsApp.' });
   }
 });

@@ -164,7 +164,7 @@ async function submitArtworkForm(event){
     document.querySelector('.file-name').textContent = '';
     showToast(
       result.fallback ? 'WhatsApp opened' : 'Sent successfully',
-      result.fallback ? 'Your details include artwork download links.' : 'Your artwork request was sent over WhatsApp.'
+      result.fallback ? 'Direct file attachments need WhatsApp API setup.' : 'Your artwork file was sent over WhatsApp.'
     );
   } catch (error) {
     console.error('Upload submit failed:', error);
