@@ -4,7 +4,11 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "vercel-build": "echo static site ready"
+  },
+  "engines": {
+    "node": "24.x"
   },
   "dependencies": {
     "axios": "^1.6.2",

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" >
@@ -136,7 +136,7 @@
       <div class="process-steps">
         <article class="process-step reveal"><span class="step-number">01</span><div class="step-icon"><span class="iconify" data-icon="lucide:mouse-pointer-click"></span></div><h3>Choose a product</h3><p>Pick the format, finish and quantity that fits your idea.</p></article>
         <article class="process-step reveal delay-1"><span class="step-number">02</span><div class="step-icon"><span class="iconify" data-icon="lucide:ruler"></span></div><h3>Review the specs</h3><p>Check trim, bleed and safe-area guidance in one click.</p></article>
-        <article class="process-step reveal"><span class="step-number">03</span><div class="step-icon"><span class="iconify" data-icon="lucide:cloud-upload"></span></div><h3>Upload artwork</h3><p>Send your files securely or ask our team for design support.</p></article>
+        <article class="process-step reveal"><span class="step-number">03</span><div class="step-icon"><span class="iconify" data-icon="lucide:message-circle"></span></div><h3>Send details</h3><p>Share your requirements and specs with us on WhatsApp.</p></article>
         <article class="process-step reveal delay-1"><span class="step-number">04</span><div class="step-icon"><span class="iconify" data-icon="lucide:package-check"></span></div><h3>Receive the goods</h3><p>We print, finish, quality-check and deliver nationwide.</p></article>
       </div>
     </section>
@@ -224,88 +224,49 @@
         <div><div class="eyebrow light"><span></span> Let’s make something</div><h2>Start a project.</h2><p>Tell us what you need. A print specialist will get back to you with the right questions—not a canned reply.</p></div>
         <form id="contact-form">
           <label><span>Your name</span><input type="text" name="name" required placeholder="Jane Doe"></label>
-          <div class="field-row"><label><span>Phone</span><input type="tel" name="phone" required placeholder="+254 700 000 000"></label><label><span>Email</span><input type="email" name="email" placeholder="you@company.com"></label></div>
+          <div class="field-row"><label><span>Phone</span><input type="tel" name="phone" required placeholder="+255 700 000 000"></label><label><span>Email</span><input type="email" name="email" placeholder="you@company.com"></label></div>
           <label><span>What can we print?</span><textarea name="message" required rows="4" placeholder="Product, size, quantity, deadline..."></textarea></label>
           <button class="button button-white" type="submit">Request a quote <span class="iconify" data-icon="lucide:arrow-right"></span></button>
         </form>
-        <div class="contact-meta"><a href="tel:+255769604606"><span class="iconify" data-icon="lucide:phone"></span>+255&nbsp;769&nbsp;604&nbsp;606</a><a href="mailto:hello@boldprints.co.ke"><span class="iconify" data-icon="lucide:mail"></span>hello@boldprints.co.ke</a><span><span class="iconify" data-icon="lucide:map-pin"></span>Nairobi, Kenya</span><span><span class="iconify" data-icon="lucide:clock-3"></span>Mon–Sat, 8am–6pm</span></div>
+        <div class="contact-meta"><a href="tel:+255769604606"><span class="iconify" data-icon="lucide:phone"></span>+255&nbsp;769&nbsp;604&nbsp;606</a><a href="mailto:bold.office2026@gmail.com"><span class="iconify" data-icon="lucide:mail"></span>bold.office2026@gmail.com</a><span><span class="iconify" data-icon="lucide:map-pin"></span>Dar es Salaam, Tanzania</span><span><span class="iconify" data-icon="lucide:clock-3"></span>Mon–Sat, 8am–6pm</span></div>
       </div>
     </section>
   </main>
 
   <footer>
     <div class="footer-top"><a class="brand footer-brand" href="#top"><span class="brand-mark">B</span><span class="brand-word">BOLD<span>PRINTS</span></span></a><p>Professional print for brands<br>with something to say.</p><a class="footer-whatsapp" href="https://wa.me/255769604606" target="_blank" rel="noreferrer"><span class="iconify" data-icon="lucide:message-circle"></span> Start a WhatsApp chat</a></div>
-    <div class="footer-columns"><div><h3>Services</h3><a href="#large-format">Large Format</a><a href="#services">Promotionals</a><a href="#services">Signage</a><a href="#services">Packaging</a></div><div><h3>Support</h3><a href="#contact">Request a Quote</a><a href="#large-format">Artwork Specs</a><a href="#contact">Upload Artwork</a><a href="#contact">Delivery</a></div><div><h3>Company</h3><a href="#products">About BOLD</a><a href="#why">Why Us</a><a href="#contact">Contact</a><a href="#top">Careers</a></div><div><h3>Follow</h3><a href="#top">Instagram</a><a href="#top">Facebook</a><a href="#top">LinkedIn</a><a href="#top">TikTok</a></div></div>
+    <div class="footer-columns"><div><h3>Services</h3><a href="#large-format">Large Format</a><a href="#services">Promotionals</a><a href="#services">Signage</a><a href="#services">Packaging</a></div><div><h3>Support</h3><a href="#contact">Request a Quote</a><a href="#large-format">Artwork Specs</a><a href="#contact">Send a Request</a><a href="#contact">Delivery</a></div><div><h3>Company</h3><a href="#products">About BOLD</a><a href="#why">Why Us</a><a href="#contact">Contact</a><a href="#top">Careers</a></div><div><h3>Follow</h3><a href="#top">Instagram</a><a href="#top">Facebook</a><a href="#top">LinkedIn</a><a href="#top">TikTok</a></div></div>
     <div class="footer-bottom"><span>© 2026 BOLD PRINTS. All rights reserved.</span><div><a href="#top">Privacy Policy</a><a href="#top">Terms &amp; Conditions</a></div><a href="#top">Back to top ↑</a></div>
   </footer>
-
-  <div class="modal" id="spec-modal" role="dialog" aria-modal="true" aria-labelledby="spec-title">
-    <div class="modal-scrim"></div>
-    <div class="modal-panel spec-panel">
-      <button type="button" class="modal-close" aria-label="Close"><span class="iconify" data-icon="lucide:x"></span></button>
-      <div class="modal-kicker">Artwork guide</div>
-      <h2 id="spec-title">Banner Printing</h2>
-      <p class="modal-lead">Build it right the first time. Enter the final artwork dimensions and output options below.</p>
-
-      <form id="spec-form">
-        <div class="spec-diagram" aria-hidden="true">
-          <div class="safe-area">SAFE AREA<span>Keep key content here</span></div>
-          <span class="bleed-label">Bleed</span>
-        </div>
-        <div class="spec-fields">
-          <label><span>Width (mm)</span><input id="spec-width" name="width" type="number" min="1" step="0.1" required placeholder="e.g. 850"></label>
-          <label><span>Height (mm)</span><input id="spec-height" name="height" type="number" min="1" step="0.1" required placeholder="e.g. 2000"></label>
-          <label><span>Bleed (mm)</span><input id="spec-bleed" name="bleed" type="number" min="0" step="0.1" required placeholder="3"></label>
-          <label><span>Safe area (mm)</span><input id="spec-safe" name="safe" type="number" min="0" step="0.1" required placeholder="5"></label>
-          <label><span>Resolution (DPI)</span><input id="spec-dpi" name="dpi" type="number" min="72" step="1" required placeholder="300"></label>
-          <label><span>Output format</span>
-            <select id="spec-format" name="format">
-              <option>PDF</option>
-              <option>AI</option>
-              <option>EPS</option>
-              <option>PSD</option>
-              <option>JPG</option>
-            </select>
-          </label>
-        </div>
-
-        <div class="spec-actions">
-          <button type="button" class="button button-primary spec-send">Send via WhatsApp</button>
-          <button type="button" class="button spec-to-upload">Send artwork</button>
-        </div>
-      </form>
-    </div>
-  </div>
 
   <div class="modal" id="upload-modal" role="dialog" aria-modal="true" aria-labelledby="upload-title">
     <div class="modal-scrim"></div>
     <div class="modal-panel upload-panel">
       <button type="button" class="modal-close" aria-label="Close"><span class="iconify" data-icon="lucide:x"></span></button>
       <div class="modal-kicker">New print project</div>
-      <h2 id="upload-title">Send your artwork</h2>
-      <p class="modal-lead">Drop in the details and files. We’ll check everything before production.</p>
+      <h2 id="upload-title">Tell us what you need</h2>
+      <p class="modal-lead">Fill in your details and we\u2019ll connect with you on WhatsApp.</p>
       <form id="upload-form">
         <div class="form-grid">
           <label><span>Name *</span><input type="text" name="name" required placeholder="Your full name"></label>
-          <label><span>Phone *</span><input name="phone" required type="tel" placeholder="+254..."></label>
-          <label><span>Email</span><input name="email" type="email" placeholder="you@company.com"></label>
-          <label><span>Company</span><input type="text" name="company" placeholder="Optional"></label>
+          <label><span>Phone *</span><input name="phone" required type="tel" placeholder="+255..."></label>
         </div>
-        <label><span>Selected product</span><select name="product" id="selected-product"></select></label>
-        <label class="file-drop" id="file-drop">
-          <input type="file" name="artwork" accept=".pdf,.ai,.eps,.psd,.png,.jpg,.jpeg" multiple>
-          <span class="iconify" data-icon="lucide:cloud-upload"></span>
-          <b>Drop artwork here or browse</b>
-          <small>PDF, AI, EPS, PSD, PNG or JPG · Max 25MB</small>
-          <em class="file-name"></em>
+        <label><span>Service type *</span>
+          <select name="product" id="selected-product" required>
+            <option value="">Select a service...</option>
+          </select>
         </label>
+        <label><span>Quantity</span><input type="number" name="quantity" min="1" step="1" placeholder="e.g. 5"></label>
+        <div class="form-grid">
+          <label><span>Width (cm)</span><input type="number" name="width" min="1" step="0.1" placeholder="e.g. 85"></label>
+          <label><span>Height (cm)</span><input type="number" name="height" min="1" step="0.1" placeholder="e.g. 200"></label>
+        </div>
         <label><span>Project notes</span><textarea name="notes" rows="3" placeholder="Quantity, deadline, finishing or delivery notes..."></textarea></label>
-        <button class="button button-primary" type="submit">Submit artwork <span class="iconify" data-icon="lucide:arrow-right"></span></button>
+        <button class="button button-primary" type="submit">Send via WhatsApp <span class="iconify" data-icon="lucide:message-circle"></span></button>
       </form>
     </div>
   </div>
-
-  <div class="toast" role="status"><span class="iconify" data-icon="lucide:circle-check-big"></span><div><b>Request received</b><span>Our print team will be in touch shortly.</span></div></div>
+    <div class="toast" role="status"><span class="iconify" data-icon="lucide:circle-check-big"></span><div><b>Request received</b><span>Our print team will be in touch shortly.</span></div></div>
   <a class="floating-whatsapp" href="https://wa.me/255769604606" target="_blank" rel="noreferrer" aria-label="Chat with Bold Prints on WhatsApp"><span class="iconify" data-icon="lucide:message-circle"></span></a>
   <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
   <script src="script.js?v=1.0.4"></script>

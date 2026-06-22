@@ -20,3 +20,7 @@ uploads/
 # Node modules and local env
 node_modules/
 .env
+
+# Vercel
+.vercel/
+.vercel

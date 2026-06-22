@@ -1,0 +1,7 @@
+with open('.env', 'w') as f:
+    f.write('WHATSAPP_PROVIDER=meta\n')
+    f.write('WHATSAPP_GRAPH_VERSION=v23.0\n')
+    f.write('WHATSAPP_PHONE_NUMBER_ID=1249435901577130\n')
+    f.write('WHATSAPP_API_TOKEN=EAAo7XKSj2CIBR5pW7owJtmTAkCyV6GDJjICHDvAZANFYJSc77LOHHKTzjub3buK3MJDcuFFxXTqvGZCNTtN9ZC4zY5u476sH4tmsrhCUf7wvtOMYkKPmj4Sac1JmxLj5JbWGiRx3p3zY1oorgzcgc5nZC5L7MHDM872Q8SDHNLiZBkJLdJyk2GRyXegTJcxuG0HXmibBYMcelsHSxE9ZAD32orDdEthzte7yXELtmMobMeaVD6PiG8hATpNR8oYF5tXPhwtnZAT4ccHkVp5strQck5F\n')
+    f.write('WHATSAPP_PHONE=255769604606\n')
+print('.env file created successfully')
