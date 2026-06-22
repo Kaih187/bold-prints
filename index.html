@@ -4,6 +4,7 @@
   <meta charset="UTF-8" >
   <meta name="viewport" content="width=device-width, initial-scale=1.0" >
   <meta name="description" content="BOLD PRINTS — premium printing, branding, signage and promotional products, delivered nationwide." >
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://code.iconify.design; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://code.iconify.design; img-src 'self' https://images.unsplash.com data:; connect-src 'self' https://api.iconify.design; form-action 'self'; base-uri 'self'; frame-ancestors 'none'">
   <title>BOLD PRINTS — Just Print It!</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -163,8 +164,8 @@
       <div class="carousel-window reveal">
         <div class="carousel-track">
           <article class="recommend-slide"><div class="recommend-image"><img src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=1400&q=85" alt="Premium brand launch materials"></div><div class="recommend-copy"><span>01 / Brand launch</span><h3>Meet your brand’s<br>best first impression.</h3><p>Everything your launch needs—from cards and folders to banners and branded gifts—made to look unmistakably cohesive.</p><button type="button" class="button button-primary open-upload" data-product="Brand Launch Kit">Explore the launch kit <span class="iconify" data-icon="lucide:arrow-up-right"></span></button></div></article>
-          <article class="recommend-slide"><div class="recommend-image"><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1400&q=85" alt="Event branding displays"></div><div class="recommend-copy"><span>02 / Events</span><h3>Own the room,<br>before you say a word.</h3><p>Bold backdrops, directional signs, podium branding and displays designed as one seamless event experience.</p><button type="button" class="button button-primary open-upload" data-product="Event Branding Package">Explore event branding <span class="iconify" data-icon="lucide:arrow-up-right"></span></button></div></article>
-          <article class="recommend-slide"><div class="recommend-image"><img src="https://images.unsplash.com/photo-1614194076674-0598e6dd5703?auto=format&fit=crop&w=1400&q=85" alt="Vehicle branding on city streets"></div><div class="recommend-copy"><span>03 / On the move</span><h3>Turn every trip<br>into an ad.</h3><p>Precision-cut vehicle graphics that work hard in traffic and protect your professional image for the long haul.</p><button type="button" class="button button-primary open-upload" data-product="Vehicle Branding">Explore vehicle branding <span class="iconify" data-icon="lucide:arrow-up-right"></span></button></div></article>
+          <article class="recommend-slide"><div class="recommend-image"><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1400&q=85" alt="Event branding displays"></div><div class="recommend-copy"><span>02 / Events</span><h3>Own the room,<br>before you say a word.</h3><p>Bold backdrops, directional signs, podium branding and displays designed as one seamless event experience.</p><button type="button" class="button button-primary" data-gallery="event">Explore event branding <span class="iconify" data-icon="lucide:arrow-up-right"></span></button></div></article>
+          <article class="recommend-slide"><div class="recommend-image"><img src="https://images.unsplash.com/photo-1614194076674-0598e6dd5703?auto=format&fit=crop&w=1400&q=85" alt="Vehicle branding on city streets"></div><div class="recommend-copy"><span>03 / On the move</span><h3>Turn every trip<br>into an ad.</h3><p>Precision-cut vehicle graphics that work hard in traffic and protect your professional image for the long haul.</p><button type="button" class="button button-primary" data-gallery="vehicle">Explore vehicle branding <span class="iconify" data-icon="lucide:arrow-up-right"></span></button></div></article>
         </div>
       </div>
     </section>
@@ -238,6 +239,28 @@
     <div class="footer-columns"><div><h3>Services</h3><a href="#large-format">Large Format</a><a href="#services">Promotionals</a><a href="#services">Signage</a><a href="#services">Packaging</a></div><div><h3>Support</h3><a href="#contact">Request a Quote</a><a href="#large-format">Artwork Specs</a><a href="#contact">Send a Request</a><a href="#contact">Delivery</a></div><div><h3>Company</h3><a href="#products">About BOLD</a><a href="#why">Why Us</a><a href="#contact">Contact</a><a href="#top">Careers</a></div><div><h3>Follow</h3><a href="#top">Instagram</a><a href="#top">Facebook</a><a href="#top">LinkedIn</a><a href="#top">TikTok</a></div></div>
     <div class="footer-bottom"><span>© 2026 BOLD PRINTS. All rights reserved.</span><div><a href="#top">Privacy Policy</a><a href="#top">Terms &amp; Conditions</a></div><a href="#top">Back to top ↑</a></div>
   </footer>
+
+  <div class="modal" id="vehicle-modal" role="dialog" aria-modal="true" aria-labelledby="vehicle-title">
+    <div class="modal-scrim"></div>
+    <div class="modal-panel vehicle-panel">
+      <button type="button" class="modal-close" aria-label="Close"><span class="iconify" data-icon="lucide:x"></span></button>
+      <div class="modal-kicker">Vehicle branding</div>
+      <h2 id="vehicle-title">Choose a vehicle type</h2>
+      <p class="modal-lead">Select your vehicle to see branding options and start a project.</p>
+      <div class="vehicle-grid" id="vehicle-grid"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="event-modal" role="dialog" aria-modal="true" aria-labelledby="event-title">
+    <div class="modal-scrim"></div>
+    <div class="modal-panel vehicle-panel">
+      <button type="button" class="modal-close" aria-label="Close"><span class="iconify" data-icon="lucide:x"></span></button>
+      <div class="modal-kicker">Event branding</div>
+      <h2 id="event-title">Choose an event type</h2>
+      <p class="modal-lead">Select your event type to see branding options and start a project.</p>
+      <div class="vehicle-grid" id="event-grid"></div>
+    </div>
+  </div>
 
   <div class="modal" id="upload-modal" role="dialog" aria-modal="true" aria-labelledby="upload-title">
     <div class="modal-scrim"></div>

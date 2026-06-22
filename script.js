@@ -48,12 +48,79 @@ document.querySelectorAll('.filter-chip').forEach(chip=>chip.addEventListener('c
 }));
 
 const uploadModal=document.querySelector('#upload-modal');
+const vehicleModal=document.querySelector('#vehicle-modal');
+const vehicleGrid=document.querySelector('#vehicle-grid');
+const eventModal=document.querySelector('#event-modal');
+const eventGrid=document.querySelector('#event-grid');
+const vehicles = [
+  { name:'Hiace (Minibus)', image:'https://images.unsplash.com/photo-1566937169542-48c5c7b4e5d8?auto=format&fit=crop&w=600&q=80' },
+  { name:'SUV Cars', image:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80' },
+  { name:'Saloon Cars', image:'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80' },
+  { name:'Hardtop Pickup Trucks', image:'https://images.unsplash.com/photo-1594502184342-2e2f0a4e5b5a?auto=format&fit=crop&w=600&q=80' },
+  { name:'Lorry / Trailer', image:'https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=600&q=80' },
+  { name:'Motorbikes', image:'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=600&q=80' },
+  { name:'Public Buses', image:'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=600&q=80' },
+  { name:'Tuk-tuk (Bajaj)', image:'https://images.unsplash.com/photo-1513010965784-4f6d2f06f72c?auto=format&fit=crop&w=600&q=80' },
+  { name:'Taxi Cabs', image:'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=600&q=80' },
+  { name:'Delivery Vans', image:'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=600&q=80' },
+  { name:'Food Trucks', image:'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?auto=format&fit=crop&w=600&q=80' },
+  { name:'Executive / Luxury', image:'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=600&q=80' },
+];
+const events = [
+  { name:'Festivals', image:'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=80' },
+  { name:'Seminars & Workshops', image:'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80' },
+  { name:'Public Meetings', image:'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80' },
+  { name:'Product Launches', image:'https://images.unsplash.com/photo-1478147427282-58a87a120781?auto=format&fit=crop&w=600&q=80' },
+  { name:'Bonanzas & Galas', image:'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=600&q=80' },
+  { name:'Campaigns & Rallies', image:'https://images.unsplash.com/photo-1560264418-c4443892a6d7?auto=format&fit=crop&w=600&q=80' },
+  { name:'Corporate Retreats', image:'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80' },
+  { name:'Trade Shows', image:'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=600&q=80' },
+  { name:'Weddings & Parties', image:'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80' },
+  { name:'Conferences & Summits', image:'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=600&q=80' },
+  { name:'Award Ceremonies', image:'https://images.unsplash.com/photo-1475721027785-74e3511e3e32?auto=format&fit=crop&w=600&q=80' },
+  { name:'Sporting Events', image:'https://images.unsplash.com/photo-1459865264687-595d652de67e?auto=format&fit=crop&w=600&q=80' },
+];
+function renderVehicleGallery() {
+  vehicleGrid.innerHTML = vehicles.map(v => `
+    <button type="button" class="vehicle-card" data-vehicle="${v.name}">
+      <div class="vehicle-image"><img src="${v.image}" alt="${v.name}" loading="lazy"></div>
+      <span class="vehicle-name">${v.name}</span>
+    </button>
+  `).join('');
+}
+vehicleGrid.addEventListener('click', e => {
+  const card = e.target.closest('.vehicle-card');
+  if (!card) return;
+  closeModal(vehicleModal);
+  selectProduct('Vehicle Branding - ' + card.dataset.vehicle);
+  openModal(uploadModal);
+});
+renderVehicleGallery();
+function renderEventGallery() {
+  eventGrid.innerHTML = events.map(e => `
+    <button type="button" class="vehicle-card" data-event="${e.name}">
+      <div class="vehicle-image"><img src="${e.image}" alt="${e.name}" loading="lazy"></div>
+      <span class="vehicle-name">${e.name}</span>
+    </button>
+  `).join('');
+}
+eventGrid.addEventListener('click', e => {
+  const card = e.target.closest('.vehicle-card');
+  if (!card) return;
+  closeModal(eventModal);
+  selectProduct('Event Branding - ' + card.dataset.event);
+  openModal(uploadModal);
+});
+renderEventGallery();
 function openModal(modal){modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');setTimeout(()=>modal.querySelector('.modal-close').focus(),100)}
 function closeModal(modal){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');if(!document.querySelector('.modal.open'))document.body.classList.remove('modal-open')}
 function selectProduct(name){productSelect.value=name;if(productSelect.value!==name){productSelect.insertAdjacentHTML('beforeend',`<option>${name}</option>`);productSelect.value=name}}
 document.addEventListener('click',e=>{
   const upload=e.target.closest('.send-art,.open-upload');
   const service=e.target.closest('[data-service]');
+  const gallery=e.target.closest('[data-gallery]');
+  if(gallery?.dataset.gallery==='vehicle'){openModal(vehicleModal);return}
+  if(gallery?.dataset.gallery==='event'){openModal(eventModal);return}
   if(upload||service){const name=upload?.dataset.product||service?.dataset.service;selectProduct(name);openModal(uploadModal)}
 });
 document.querySelectorAll('.modal').forEach(modal=>{
@@ -103,16 +170,18 @@ function showToast(message='Request received', subtitle='Our print team will be 
   setTimeout(()=>toast.classList.remove('show'),4500);
 }
 
+function sanitize(val) { const el = document.createElement('div'); el.textContent = val; return el.textContent; }
+
 function submitArtworkForm(event){
   event.preventDefault();
   const form = event.target;
-  const name = form.querySelector('[name="name"]').value.trim();
-  const phone = form.querySelector('[name="phone"]').value.trim();
-  const product = form.querySelector('[name="product"]').value;
-  const quantity = form.querySelector('[name="quantity"]').value || '';
-  const width = form.querySelector('[name="width"]').value || '';
-  const height = form.querySelector('[name="height"]').value || '';
-  const notes = form.querySelector('[name="notes"]').value.trim();
+  const name = sanitize(form.querySelector('[name="name"]').value.trim());
+  const phone = sanitize(form.querySelector('[name="phone"]').value.trim());
+  const product = sanitize(form.querySelector('[name="product"]').value);
+  const quantity = sanitize(form.querySelector('[name="quantity"]').value || '');
+  const width = sanitize(form.querySelector('[name="width"]').value || '');
+  const height = sanitize(form.querySelector('[name="height"]').value || '');
+  const notes = sanitize(form.querySelector('[name="notes"]').value.trim());
 
   if (!name || !phone || !product) {
     showToast('Missing info', 'Please fill in your name, phone and service type.');

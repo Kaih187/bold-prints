@@ -17,6 +17,13 @@ yarn-error.log*
 # Upload artifacts
 uploads/
 
+# Dev/test artifacts
+test_*.txt
+test_*.py
+temp_*
+create_env.*
+live_check.*
+
 # Node modules and local env
 node_modules/
 .env
